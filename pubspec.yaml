@@ -1,0 +1,35 @@
+name: brassket_app
+description: Um app de exemplo com Splash, Login e Cadastro via Firebase Auth.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ==== Firebase Core e Auth ====
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.17.0
+
+  # (Opcional, mas útil para gerenciar estados simples)
+  provider: ^6.1.1
+
+  # Fontes customizadas (se você quiser usar uma fonte “divertida” como no Figma)
+  google_fonts: ^4.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # Se você tiver a imagem de “bola de basquete” (como no Figma), coloque aqui.
+    - assets/images/basketball.png
+
+
