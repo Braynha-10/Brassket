@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "418761399439",
+    "project_id": "projeto-brassket",
+    "storage_bucket": "projeto-brassket.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418761399439:android:92fb1bd5cb11e12044e4fa",
+        "android_client_info": {
+          "package_name": "com.example.projeto_brassket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9-H3V0g81GQ7emAsZ1AU5YRWeNjLVFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+name: brassket_app
+description: Um app de exemplo com Splash, Login e Cadastro via Firebase Auth.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # ==== Firebase ====
+  firebase_core: ^3.13.1
+  firebase_auth: ^5.6.0
+  cloud_firestore: ^5.6.8
+
+  # Gerenciamento de estado (opcional)
+  provider: ^6.1.1
+
+  # Fontes Google
+  google_fonts: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/basketball.png
+    - assets/images/personagem.png
