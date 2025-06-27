@@ -1,4 +1,3 @@
-// lib/screens/time_home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,42 +42,44 @@ class _TimeHomeScreenState extends State<TimeHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF5D4037),
-      appBar: AppBar(
-        title: Text(nomeTime),
-        backgroundColor: Colors.brown,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            ElevatedButton(onPressed: () { Navigator.of(context).pushNamed('/game');}, child: const Text("Next Game")),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(onPressed: () {}, child: const Text("Class")),
-                ElevatedButton(onPressed: () {}, child: const Text("Scout")),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(onPressed: () {}, child: const Text("Finan")),
-                ElevatedButton(onPressed: () {}, child: const Text("Gym Plans")),
-              ],
-            ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                'Score: $score\nFinanças: $financas\nConfiança: $confianca',
-                style: const TextStyle(color: Colors.white),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacementNamed('/'); // Volta para HomePage
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFF5D4037),
+        appBar: AppBar(
+          title: Text(nomeTime),
+          backgroundColor: Colors.brown,
+          automaticallyImplyLeading: false, // Remove botão voltar
+          leading: IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/game');
+                },
+                child: const Text("Nova Temporada"),
               ),
-            ),
-          ],
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  'Score: $score\nFinanças: $financas\nConfiança: $confianca',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

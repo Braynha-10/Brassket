@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-class ChooseTeamScreen extends StatelessWidget {
+class ChooseTeamScreen extends StatefulWidget {
   const ChooseTeamScreen({super.key});
+
+  @override
+  State<ChooseTeamScreen> createState() => _ChooseTeamScreenState();
+}
+
+class _ChooseTeamScreenState extends State<ChooseTeamScreen> {
+  bool _loading = true;
 
   final List<Map<String, dynamic>> mockTimes = const [
     {
@@ -27,6 +33,29 @@ class ChooseTeamScreen extends StatelessWidget {
     },
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _checkIfHasTeam();
+  }
+
+  Future<void> _checkIfHasTeam() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final data = doc.data();
+      if (data != null && data['time'] != null && data['time'] != '') {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacementNamed('/time-home');
+        });
+        return;
+      }
+    }
+    setState(() {
+      _loading = false;
+    });
+  }
+
   Future<void> _escolherTime(BuildContext context, Map<String, dynamic> time) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -39,13 +68,18 @@ class ChooseTeamScreen extends StatelessWidget {
             'financas': time['dinheiro'],
             'confianca': time['confiança'],
           }, SetOptions(merge: true));
-      Navigator.of(context).pushNamed('/time-home', arguments: time['nome']);
+      Navigator.of(context).pushNamedAndRemoveUntil('/time-home', (route) => false, arguments: time['nome']);
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF5D4037),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF5D4037),
       appBar: AppBar(

@@ -110,35 +110,56 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
+  Future<bool> _onWillPop() async {
+    if (!isSeasonOver()) {
+      final confirm = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Atenção'),
+          content: const Text('Você perderá o progresso da temporada atual. Deseja continuar?'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
+            TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Sim')),
+          ],
+        ),
+      );
+      return confirm == true;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Next Game Simulator")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: onNextGamePressed,
-              child: const Text("Next Game"),
-            ),
-            const SizedBox(height: 20),
-            Text(lastResult, style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 20),
-            const Text("Classificação:"),
-            Expanded(
-              child: ListView.builder(
-                itemCount: teams.length,
-                itemBuilder: (context, index) {
-                  final team = getStandings()[index];
-                  return ListTile(
-                    title: Text(team.name),
-                    subtitle: Text("Pts: ${team.points} | V: ${team.wins} E: ${team.draws} D: ${team.losses}"),
-                  );
-                },
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Nova Temporada")),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: onNextGamePressed,
+                child: const Text("Next Game"),
               ),
-            )
-          ],
+              const SizedBox(height: 20),
+              Text(lastResult, style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 20),
+              const Text("Classificação:"),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: teams.length,
+                  itemBuilder: (context, index) {
+                    final team = getStandings()[index];
+                    return ListTile(
+                      title: Text(team.name),
+                      subtitle: Text("Pts: ${team.points} | V: ${team.wins} E: ${team.draws} D: ${team.losses}"),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

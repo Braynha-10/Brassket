@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   Future<void> _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    // Volta para a tela de login (limpando a pilha)
     Navigator.of(context).pushReplacementNamed('/login');
+  }
+
+  Future<void> _handlePlay(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final data = doc.data();
+      if (data != null && data['time'] != null && data['time'] != '') {
+        Navigator.of(context).pushNamed('/time-home');
+        return;
+      }
+    }
+    Navigator.of(context).pushNamed('/intro');
   }
 
   @override
@@ -19,11 +32,11 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color(0xFF5D4037),
         actions: [
           Tooltip(
-            message: userEmail, // Mostra o email do usuário ao passar o mouse
+            message: userEmail,
             child: Padding(
               padding: const EdgeInsets.only(right: 16),
               child: Image.asset(
-                'assets/images/personagem.png', // Coloque aqui o caminho da imagem desejada
+                'assets/images/personagem.png',
                 width: 40,
                 height: 40,
               ),
@@ -50,12 +63,9 @@ class HomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/intro');
-              },
+              onPressed: () => _handlePlay(context),
               child: const Text(
                 'Play',
                 style: TextStyle(
@@ -71,8 +81,7 @@ class HomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
               onPressed: () {
                 Navigator.of(context).pushNamed('/options');
@@ -92,8 +101,7 @@ class HomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
               onPressed: () => _logout(context),
               child: const Text(
