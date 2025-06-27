@@ -7,6 +7,8 @@ import 'screens/Intro_screen.dart';
 import 'screens/choose_team_screen.dart';
 import 'screens/TimeHome_screen.dart';
 import 'screens/game_screen.dart'; // Importando a tela do jogo
+import 'screens/options_screen.dart'; // Importando a tela de opções
+import 'screens/update_profile_screen.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +41,8 @@ class BrassketApp extends StatelessWidget {
         '/escolher-time': (_) => const ChooseTeamScreen(),
         '/time-home': (_) => const TimeHomeScreen(),
         '/game': (_) => const GamePage(), // Rota para a tela do jogo
+        '/options': (_) => const OptionsScreen(), // Rota para a tela de opções
+        '/update_profile': (_) => const UpdatePasswordScreen(), // Rota para a tela de atualização de perfil
       },
     );
   }

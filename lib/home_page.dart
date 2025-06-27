@@ -1,4 +1,3 @@
-// lib/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,44 +17,34 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Brassket Home'),
         backgroundColor: const Color(0xFF5D4037),
+        actions: [
+          Tooltip(
+            message: userEmail, // Mostra o email do usuário ao passar o mouse
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Image.asset(
+                'assets/images/personagem.png', // Coloque aqui o caminho da imagem desejada
+                width: 40,
+                height: 40,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Bem-vindo,\n$userEmail',
+            const Text(
+              'Bem-vindo\n',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Image.asset(
-              'assets/images/basketball.png',
-              width: 120,
-              height: 120,
-            ),
             const SizedBox(height: 24),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFFA726),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              ),
-              onPressed: () => _logout(context),
-              child: const Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.brown,
-                ),
-              ),
-            ),
-              ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFFA726),
                 shape: RoundedRectangleBorder(
@@ -75,27 +64,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-              ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFFA726),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              ),
-                onPressed: () {
-
-              },
-              child: const Text(
-                'Continue',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.brown,
-                ),
-              ),
-            ),
-              ElevatedButton(
+            const SizedBox(height: 16),
+            ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFFA726),
                 shape: RoundedRectangleBorder(
@@ -105,10 +75,29 @@ class HomePage extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
               onPressed: () {
-                // Navegar para a tela de opções
+                Navigator.of(context).pushNamed('/options');
               },
               child: const Text(
                 'Options',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.brown,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFFA726),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+              onPressed: () => _logout(context),
+              child: const Text(
+                'Logout',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.brown,
